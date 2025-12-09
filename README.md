@@ -21,13 +21,13 @@ A Docker-based security scanning toolkit that provides a unified interface for r
 docker build -t security-scanning .
 
 # Run a scan
-docker run --rm -v ./output:/output security-scanning nikto https://example.com
+docker run --rm -it -v $(pwd)/output:/output security-scanning nikto https://example.com
 ```
 
 **Windows PowerShell:**
 ```powershell
 docker build -t security-scanning .
-docker run --rm -v ${PWD}/output:/output security-scanning nikto https://example.com
+docker run --rm -it -v ${PWD}/output:/output security-scanning nikto https://example.com
 ```
 
 ## Available Tools
@@ -56,73 +56,90 @@ docker run --rm -v ${PWD}/output:/output security-scanning nikto https://example
 
 ### Basic Syntax
 
+**Linux/macOS:**
 ```bash
-docker run --rm -v ./output:/output security-scanning <tool> <target> [options]
+docker run --rm -it -v $(pwd)/output:/output security-scanning <tool> <target> [options]
+```
+
+**Windows PowerShell:**
+```powershell
+docker run --rm -it -v ${PWD}/output:/output security-scanning <tool> <target> [options]
 ```
 
 - `--rm` removes the container after the scan completes
-- `-v ./output:/output` mounts the output directory for reports
-- Add `-it` for interactive tools (shell, or to see real-time output)
+- `-it` enables interactive mode (allows Ctrl-C to stop scans)
+- `-v .../output:/output` mounts the output directory for reports
 
 ### Examples
 
 **Web server scan with Nikto:**
 ```bash
-docker run --rm -v ./output:/output security-scanning nikto https://example.com
+docker run --rm -it -v $(pwd)/output:/output security-scanning nikto https://example.com        # Linux/macOS
+docker run --rm -it -v ${PWD}/output:/output security-scanning nikto https://example.com        # PowerShell
 ```
 
 **Network scan with Nmap:**
 ```bash
-docker run --rm -v ./output:/output security-scanning nmap example.com -p 80,443
+docker run --rm -it -v $(pwd)/output:/output security-scanning nmap example.com -p 80,443       # Linux/macOS
+docker run --rm -it -v ${PWD}/output:/output security-scanning nmap example.com -p 80,443       # PowerShell
 ```
 
 **SQL injection testing:**
 ```bash
-docker run --rm -v ./output:/output security-scanning sqlmap "https://example.com/page?id=1"
+docker run --rm -it -v $(pwd)/output:/output security-scanning sqlmap "https://example.com/page?id=1"   # Linux/macOS
+docker run --rm -it -v ${PWD}/output:/output security-scanning sqlmap "https://example.com/page?id=1"   # PowerShell
 ```
 
 **SSL/TLS analysis:**
 ```bash
-docker run --rm -v ./output:/output security-scanning sslscan example.com:443
+docker run --rm -it -v $(pwd)/output:/output security-scanning sslscan example.com:443          # Linux/macOS
+docker run --rm -it -v ${PWD}/output:/output security-scanning sslscan example.com:443          # PowerShell
 ```
 
 ### OWASP ZAP Scans
 
 **Quick passive scan (recommended first):**
 ```bash
-docker run --rm -v ./output:/output security-scanning zap-baseline https://example.com
+docker run --rm -it -v $(pwd)/output:/output security-scanning zap-baseline https://example.com   # Linux/macOS
+docker run --rm -it -v ${PWD}/output:/output security-scanning zap-baseline https://example.com   # PowerShell
 ```
 
 **Full active scan (performs attacks - authorized targets only):**
 ```bash
-docker run --rm -v ./output:/output security-scanning zap-full https://example.com
+docker run --rm -it -v $(pwd)/output:/output security-scanning zap-full https://example.com       # Linux/macOS
+docker run --rm -it -v ${PWD}/output:/output security-scanning zap-full https://example.com       # PowerShell
 ```
 
 **Rate-limited scan for production systems:**
 ```bash
-docker run --rm -v ./output:/output security-scanning zap-full-gentle https://example.com
+docker run --rm -it -v $(pwd)/output:/output security-scanning zap-full-gentle https://example.com    # Linux/macOS
+docker run --rm -it -v ${PWD}/output:/output security-scanning zap-full-gentle https://example.com    # PowerShell
 ```
 
 **API security scan (OpenAPI/Swagger):**
 ```bash
-docker run --rm -v ./output:/output security-scanning zap-api https://example.com/api/openapi.json
+docker run --rm -it -v $(pwd)/output:/output security-scanning zap-api https://example.com/api/openapi.json   # Linux/macOS
+docker run --rm -it -v ${PWD}/output:/output security-scanning zap-api https://example.com/api/openapi.json   # PowerShell
 ```
 
 ### Directory Discovery
 
 ```bash
-# Using dirb
-docker run --rm -v ./output:/output security-scanning dirb https://example.com
+# Linux/macOS
+docker run --rm -it -v $(pwd)/output:/output security-scanning dirb https://example.com
+docker run --rm -it -v $(pwd)/output:/output security-scanning gobuster https://example.com
 
-# Using gobuster
-docker run --rm -v ./output:/output security-scanning gobuster https://example.com
+# PowerShell
+docker run --rm -it -v ${PWD}/output:/output security-scanning dirb https://example.com
+docker run --rm -it -v ${PWD}/output:/output security-scanning gobuster https://example.com
 ```
 
 ### Interactive Shell
 
 Drop into a Kali shell with all tools available:
 ```bash
-docker run --rm -it -v ./output:/output security-scanning shell
+docker run --rm -it -v $(pwd)/output:/output security-scanning shell       # Linux/macOS
+docker run --rm -it -v ${PWD}/output:/output security-scanning shell       # PowerShell
 ```
 
 ## Output
