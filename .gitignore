@@ -1,0 +1,18 @@
+# Scan output (may contain sensitive data)
+output/*
+!output/.gitkeep
+
+# Target lists
+targets/*
+!targets/.gitkeep
+
+# Docker
+.docker/
+
+# macOS
+.DS_Store
+
+# IDE/Editor settings
+.claude/
+.vscode/
+.idea/
