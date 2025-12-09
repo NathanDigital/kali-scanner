@@ -1,0 +1,13 @@
+services:
+  kali:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: security-scanning:latest
+    container_name: kali-scanner
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./output:/output
+      - ./targets:/targets:ro
+    network_mode: bridge
